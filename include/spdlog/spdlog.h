@@ -140,12 +140,6 @@ inline void log(level::level_enum lvl, format_string_t<Args...> fmt, Args &&... 
 }
 
 template<typename... Args>
-inline void trace(format_string_t<Args...> fmt, Args &&... args)
-{
-    default_logger_raw()->trace(fmt, std::forward<Args>(args)...);
-}
-
-template<typename... Args>
 inline void debug(format_string_t<Args...> fmt, Args &&... args)
 {
     default_logger_raw()->debug(fmt, std::forward<Args>(args)...);
@@ -155,6 +149,12 @@ template<typename... Args>
 inline void info(format_string_t<Args...> fmt, Args &&... args)
 {
     default_logger_raw()->info(fmt, std::forward<Args>(args)...);
+}
+
+template<typename... Args>
+inline void notice(format_string_t<Args...> fmt, Args &&... args)
+{
+    default_logger_raw()->notice(fmt, std::forward<Args>(args)...);
 }
 
 template<typename... Args>
@@ -173,6 +173,18 @@ template<typename... Args>
 inline void critical(format_string_t<Args...> fmt, Args &&... args)
 {
     default_logger_raw()->critical(fmt, std::forward<Args>(args)...);
+}
+
+template<typename... Args>
+inline void alert(format_string_t<Args...> fmt, Args &&... args)
+{
+    default_logger_raw()->alert(fmt, std::forward<Args>(args)...);
+}
+
+template<typename... Args>
+inline void emergency(format_string_t<Args...> fmt, Args &&... args)
+{
+    default_logger_raw()->emergency(fmt, std::forward<Args>(args)...);
 }
 
 template<typename T>
@@ -201,15 +213,15 @@ inline void log(level::level_enum lvl, wformat_string_t<Args...> fmt, Args &&...
 }
 
 template<typename... Args>
-inline void trace(wformat_string_t<Args...> fmt, Args &&... args)
-{
-    default_logger_raw()->trace(fmt, std::forward<Args>(args)...);
-}
-
-template<typename... Args>
 inline void debug(wformat_string_t<Args...> fmt, Args &&... args)
 {
     default_logger_raw()->debug(fmt, std::forward<Args>(args)...);
+}
+
+template<typename... Args>
+inline void info(wformat_string_t<Args...> fmt, Args &&... args)
+{
+    default_logger_raw()->info(fmt, std::forward<Args>(args)...);
 }
 
 template<typename... Args>
@@ -235,13 +247,19 @@ inline void critical(wformat_string_t<Args...> fmt, Args &&... args)
 {
     default_logger_raw()->critical(fmt, std::forward<Args>(args)...);
 }
-#endif
 
-template<typename T>
-inline void trace(const T &msg)
+template<typename... Args>
+inline void alert(wformat_string_t<Args...> fmt, Args &&... args)
 {
-    default_logger_raw()->trace(msg);
+    default_logger_raw()->alert(fmt, std::forward<Args>(args)...);
 }
+
+template<typename... Args>
+inline void emergency(wformat_string_t<Args...> fmt, Args &&... args)
+{
+    default_logger_raw()->emergency(fmt, std::forward<Args>(args)...);
+}
+#endif
 
 template<typename T>
 inline void debug(const T &msg)
@@ -253,6 +271,12 @@ template<typename T>
 inline void info(const T &msg)
 {
     default_logger_raw()->info(msg);
+}
+
+template<typename T>
+inline void notice(const T &msg)
+{
+    default_logger_raw()->notice(msg);
 }
 
 template<typename T>
@@ -271,6 +295,18 @@ template<typename T>
 inline void critical(const T &msg)
 {
     default_logger_raw()->critical(msg);
+}
+
+template<typename T>
+inline void alert(const T &msg)
+{
+    default_logger_raw()->alert(msg);
+}
+
+template<typename T>
+inline void emergency(const T &msg)
+{
+    default_logger_raw()->emergency(msg);
 }
 
 } // namespace spdlog
@@ -314,6 +350,14 @@ inline void critical(const T &msg)
 #    define SPDLOG_INFO(...) (void)0
 #endif
 
+#if SPDLOG_ACTIVE_LEVEL <= SPDLOG_LEVEL_NOTICE
+#    define SPDLOG_LOGGER_NOTICE(logger, ...) SPDLOG_LOGGER_CALL(logger, spdlog::level::notice, __VA_ARGS__)
+#    define SPDLOG_NOTICE(...) SPDLOG_LOGGER_NOTICE(spdlog::default_logger_raw(), __VA_ARGS__)
+#else
+#    define SPDLOG_LOGGER_NOTICE(logger, ...) (void)0
+#    define SPDLOG_NOTICE(...) (void)0
+#endif
+
 #if SPDLOG_ACTIVE_LEVEL <= SPDLOG_LEVEL_WARN
 #    define SPDLOG_LOGGER_WARN(logger, ...) SPDLOG_LOGGER_CALL(logger, spdlog::level::warn, __VA_ARGS__)
 #    define SPDLOG_WARN(...) SPDLOG_LOGGER_WARN(spdlog::default_logger_raw(), __VA_ARGS__)
@@ -336,6 +380,22 @@ inline void critical(const T &msg)
 #else
 #    define SPDLOG_LOGGER_CRITICAL(logger, ...) (void)0
 #    define SPDLOG_CRITICAL(...) (void)0
+#endif
+
+#if SPDLOG_ACTIVE_LEVEL <= SPDLOG_LEVEL_ALERT
+#    define SPDLOG_LOGGER_ALERT(logger, ...) SPDLOG_LOGGER_CALL(logger, spdlog::level::alert, __VA_ARGS__)
+#    define SPDLOG_ALERT(...) SPDLOG_LOGGER_ALERT(spdlog::default_logger_raw(), __VA_ARGS__)
+#else
+#    define SPDLOG_LOGGER_ALERT(logger, ...) (void)0
+#    define SPDLOG_ALERT(...) (void)0
+#endif
+
+#if SPDLOG_ACTIVE_LEVEL <= SPDLOG_LEVEL_EMERGENCY
+#    define SPDLOG_LOGGER_EMERGENCY(logger, ...) SPDLOG_LOGGER_CALL(logger, spdlog::level::emergency, __VA_ARGS__)
+#    define SPDLOG_EMERGENCY(...) SPDLOG_LOGGER_EMERGENCY(spdlog::default_logger_raw(), __VA_ARGS__)
+#else
+#    define SPDLOG_LOGGER_EMERGENCY(logger, ...) (void)0
+#    define SPDLOG_EMERGENCY(...) (void)0
 #endif
 
 #ifdef SPDLOG_HEADER_ONLY

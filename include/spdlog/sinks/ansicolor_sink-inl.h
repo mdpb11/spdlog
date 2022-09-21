@@ -21,12 +21,14 @@ SPDLOG_INLINE ansicolor_sink<ConsoleMutex>::ansicolor_sink(FILE *target_file, co
 
 {
     set_color_mode(mode);
-    colors_[level::trace] = to_string_(white);
-    colors_[level::debug] = to_string_(cyan);
+    colors_[level::debug] = to_string_(white);
     colors_[level::info] = to_string_(green);
+    colors_[level::notice] = to_string_(cyan);
     colors_[level::warn] = to_string_(yellow_bold);
     colors_[level::err] = to_string_(red_bold);
     colors_[level::critical] = to_string_(bold_on_red);
+    colors_[level::alert] = to_string_(bold_on_red);
+    colors_[level::emergency] = to_string_(bold_on_red);
     colors_[level::off] = to_string_(reset);
 }
 

@@ -24,7 +24,7 @@ public:
 
 protected:
     // sink log level - default is all
-    level_t level_{level::trace};
+    level_t level_{level::debug};
 };
 
 } // namespace sinks

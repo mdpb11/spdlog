@@ -141,13 +141,7 @@ public:
     }
 
     template<typename... Args>
-    void trace(format_string_t<Args...> fmt, Args &&... args)
-    {
-        log(level::trace, fmt, std::forward<Args>(args)...);
-    }
-
-    template<typename... Args>
-    void debug(format_string_t<Args...> fmt, Args &&... args)
+    void debug(format_string_t<Args...> fmt, Args &&...args)
     {
         log(level::debug, fmt, std::forward<Args>(args)...);
     }
@@ -159,21 +153,39 @@ public:
     }
 
     template<typename... Args>
-    void warn(format_string_t<Args...> fmt, Args &&... args)
+    void notice(format_string_t<Args...> fmt, Args &&...args)
+    {
+        log(level::notice, fmt, std::forward<Args>(args)...);
+    }
+
+    template<typename... Args>
+    void warn(format_string_t<Args...> fmt, Args &&...args)
     {
         log(level::warn, fmt, std::forward<Args>(args)...);
     }
 
     template<typename... Args>
-    void error(format_string_t<Args...> fmt, Args &&... args)
+    void error(format_string_t<Args...> fmt, Args &&...args)
     {
         log(level::err, fmt, std::forward<Args>(args)...);
     }
 
     template<typename... Args>
-    void critical(format_string_t<Args...> fmt, Args &&... args)
+    void critical(format_string_t<Args...> fmt, Args &&...args)
     {
         log(level::critical, fmt, std::forward<Args>(args)...);
+    }
+
+    template<typename... Args>
+    void alert(format_string_t<Args...> fmt, Args &&...args)
+    {
+        log(level::alert, fmt, std::forward<Args>(args)...);
+    }
+
+    template<typename... Args>
+    void emergency(format_string_t<Args...> fmt, Args &&...args)
+    {
+        log(level::emergency, fmt, std::forward<Args>(args)...);
     }
 
 #ifdef SPDLOG_WCHAR_TO_UTF8_SUPPORT
@@ -262,12 +274,6 @@ public:
 #endif
 
     template<typename T>
-    void trace(const T &msg)
-    {
-        log(level::trace, msg);
-    }
-
-    template<typename T>
     void debug(const T &msg)
     {
         log(level::debug, msg);
@@ -277,6 +283,12 @@ public:
     void info(const T &msg)
     {
         log(level::info, msg);
+    }
+
+    template<typename T>
+    void notice(const T &msg)
+    {
+        log(level::notice, msg);
     }
 
     template<typename T>
@@ -295,6 +307,18 @@ public:
     void critical(const T &msg)
     {
         log(level::critical, msg);
+    }
+
+    template<typename T>
+    void alert(const T &msg)
+    {
+        log(level::alert, msg);
+    }
+
+    template<typename T>
+    void emergency(const T &msg)
+    {
+        log(level::emergency, msg);
     }
 
     // return true logging is enabled for the given level.

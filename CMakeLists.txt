@@ -61,10 +61,6 @@ option(SPDLOG_BUILD_SHARED "Build shared library" OFF)
 # precompiled headers option
 option(SPDLOG_ENABLE_PCH "Build static or shared library using precompiled header to speed up compilation time" OFF)
 
-# example options
-option(SPDLOG_BUILD_EXAMPLE "Build example" ${SPDLOG_MASTER_PROJECT})
-option(SPDLOG_BUILD_EXAMPLE_HO "Build header only example" OFF)
-
 # testing options
 option(SPDLOG_BUILD_TESTS "Build tests" OFF)
 option(SPDLOG_BUILD_TESTS_HO "Build tests using the header only version" OFF)
@@ -246,15 +242,6 @@ endif()
 # ---------------------------------------------------------------------------------------
 # Build binaries
 # ---------------------------------------------------------------------------------------
-if(SPDLOG_BUILD_EXAMPLE OR SPDLOG_BUILD_EXAMPLE_HO OR SPDLOG_BUILD_ALL)
-    message(STATUS "Generating example(s)")
-    add_subdirectory(example)
-    spdlog_enable_warnings(example)
-    if(SPDLOG_BUILD_EXAMPLE_HO)
-        spdlog_enable_warnings(example_header_only)
-    endif()
-endif()
-
 if(SPDLOG_BUILD_TESTS OR SPDLOG_BUILD_TESTS_HO OR SPDLOG_BUILD_ALL)
     message(STATUS "Generating tests")
     enable_testing()

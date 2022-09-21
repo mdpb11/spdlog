@@ -194,13 +194,15 @@ using level_t = details::null_atomic_int;
 using level_t = std::atomic<int>;
 #endif
 
-#define SPDLOG_LEVEL_TRACE 0
-#define SPDLOG_LEVEL_DEBUG 1
-#define SPDLOG_LEVEL_INFO 2
+#define SPDLOG_LEVEL_DEBUG 0
+#define SPDLOG_LEVEL_INFO 1
+#define SPDLOG_LEVEL_NOTICE 2
 #define SPDLOG_LEVEL_WARN 3
 #define SPDLOG_LEVEL_ERROR 4
 #define SPDLOG_LEVEL_CRITICAL 5
-#define SPDLOG_LEVEL_OFF 6
+#define SPDLOG_LEVEL_ALERT 6
+#define SPDLOG_LEVEL_EMERGENCY 7
+#define SPDLOG_LEVEL_OFF 8
 
 #if !defined(SPDLOG_ACTIVE_LEVEL)
 #    define SPDLOG_ACTIVE_LEVEL SPDLOG_LEVEL_INFO
@@ -210,29 +212,33 @@ using level_t = std::atomic<int>;
 namespace level {
 enum level_enum : int
 {
-    trace = SPDLOG_LEVEL_TRACE,
     debug = SPDLOG_LEVEL_DEBUG,
     info = SPDLOG_LEVEL_INFO,
+    notice = SPDLOG_LEVEL_NOTICE,
     warn = SPDLOG_LEVEL_WARN,
     err = SPDLOG_LEVEL_ERROR,
     critical = SPDLOG_LEVEL_CRITICAL,
+    alert = SPDLOG_LEVEL_ALERT,
+    emergency = SPDLOG_LEVEL_EMERGENCY,
     off = SPDLOG_LEVEL_OFF,
     n_levels
 };
 
-#define SPDLOG_LEVEL_NAME_TRACE spdlog::string_view_t("trace", 5)
 #define SPDLOG_LEVEL_NAME_DEBUG spdlog::string_view_t("debug", 5)
 #define SPDLOG_LEVEL_NAME_INFO spdlog::string_view_t("info", 4)
+#define SPDLOG_LEVEL_NAME_NOTICE spdlog::string_view_t("notice", 6)
 #define SPDLOG_LEVEL_NAME_WARNING spdlog::string_view_t("warning", 7)
 #define SPDLOG_LEVEL_NAME_ERROR spdlog::string_view_t("error", 5)
 #define SPDLOG_LEVEL_NAME_CRITICAL spdlog::string_view_t("critical", 8)
+#define SPDLOG_LEVEL_NAME_ALERT spdlog::string_view_t("alert", 5)
+#define SPDLOG_LEVEL_NAME_EMERGENCY spdlog::string_view_t("emergency", 9)
 #define SPDLOG_LEVEL_NAME_OFF spdlog::string_view_t("off", 3)
 
 #if !defined(SPDLOG_LEVEL_NAMES)
 #    define SPDLOG_LEVEL_NAMES                                                                                                             \
         {                                                                                                                                  \
-            SPDLOG_LEVEL_NAME_TRACE, SPDLOG_LEVEL_NAME_DEBUG, SPDLOG_LEVEL_NAME_INFO, SPDLOG_LEVEL_NAME_WARNING, SPDLOG_LEVEL_NAME_ERROR,  \
-                SPDLOG_LEVEL_NAME_CRITICAL, SPDLOG_LEVEL_NAME_OFF                                                                          \
+            SPDLOG_LEVEL_NAME_DEBUG, SPDLOG_LEVEL_NAME_INFO, SPDLOG_LEVEL_NAME_NOTICE, SPDLOG_LEVEL_NAME_WARNING, SPDLOG_LEVEL_NAME_ERROR, \
+                SPDLOG_LEVEL_NAME_CRITICAL, SPDLOG_LEVEL_NAME_ALERT, SPDLOG_LEVEL_NAME_EMERGENCY, SPDLOG_LEVEL_NAME_OFF                    \
         }
 #endif
 
@@ -240,7 +246,7 @@ enum level_enum : int
 
 #    define SPDLOG_SHORT_LEVEL_NAMES                                                                                                       \
         {                                                                                                                                  \
-            "T", "D", "I", "W", "E", "C", "O"                                                                                              \
+            "15", "14", "13", "12", "11", "10", "9", "8", "7"                                                                              \
         }
 #endif
 

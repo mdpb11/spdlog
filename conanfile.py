@@ -1,5 +1,4 @@
-from conan import ConanFile
-from conan.tools.cmake import CMakeToolchain, CMake, cmake_layout
+from conans import ConanFile, CMake
 
 
 class SpdlogMicroUpConan(ConanFile):
@@ -24,18 +23,20 @@ class SpdlogMicroUpConan(ConanFile):
         "no_exceptions": False,
     }
 
+    generators = "cmake"
+
     exports_sources = "CMakeLists.txt", "src/*", "include/*", "cmake/*"
 
     def config_options(self):
         if self.settings.os == "Windows":
             del self.options.fPIC
 
-    def layout(self):
-        cmake_layout(self)
+    # def layout(self):
+    #     cmake_layout(self)
 
-    def generate(self):
-        tc = CMakeToolchain(self)
-        tc.generate()
+    # def generate(self):
+    #     tc = CMakeToolchain(self)
+    #     tc.generate()
 
     def build(self):
         cmake = CMake(self)
@@ -47,7 +48,7 @@ class SpdlogMicroUpConan(ConanFile):
         cmake.install()
 
     def package_info(self):
-        self.cpp_info.components["libspdlog"].names["pkg_config"] = "libspdlog"
-        self.cpp_info.components["libspdlog"].libs = ["spdlog"]
-        self.cpp_info.components["libspdlog"].libdirs = []
-        self.cpp_info.components["libspdlog"].include_dirs = []
+        self.cpp_info.names["pkg_config"] = "libspdlog"
+        self.cpp_info.libs = ["spdlog"]
+        self.cpp_info.libdirs = ["lib"]
+        self.cpp_info.include_dirs = ["include"]

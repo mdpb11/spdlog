@@ -76,6 +76,7 @@ spdlogConfigVersion.cmake
 # idea
 .idea/
 cmake-build-*/
+build-*/
 *.db
 *.ipch
 *.filters
